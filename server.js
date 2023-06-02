@@ -4,8 +4,8 @@ dotenv.config();
 import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
-      apiKey: process.env.OPENAI,
-})
+  apiKey: process.env.OPENAI,
+});
 
 const openai = new OpenAIApi(configuration);
 
@@ -14,19 +14,19 @@ import cors from 'cors';
 
 const app = express();
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
 app.post('/dream', async (req, res) => {
-      const promt = req.body.promt;
+    const prompt = req.body.prompt;
 
-      const aiResponse = await openai.createImage({
-            promt,
-            n: 1,
-            size: '1024x1024',
-      })
+    const aiResponse = await openai.createImage({
+      prompt,
+      n: 1,
+      size: '1024x1024',
+    });
 
-      const image = aiResponse.data.data[0].url;
-      res.send({ image });
-})
+    const image = aiResponse.data.data[0].url;
+    res.send({ image });
+});
 
-app.listen(8080, () => console.log('make art on http://localhost:8080/dream') )
+app.listen(8080, () => console.log('make art on http://localhost:8080/dream'));
